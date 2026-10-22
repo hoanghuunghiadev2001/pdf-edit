@@ -1,4 +1,11 @@
+/* ================================================================
+   PDF Editor Pro - App.css (đầy đủ)
+   ================================================================ */
+
 /* ---------- reset (đè lên template Vite) ---------- */
+* {
+  box-sizing: border-box;
+}
 html,
 body {
   margin: 0;
@@ -7,6 +14,7 @@ body {
   height: 100%;
   display: block !important;
   background: #0b1120;
+  overflow: hidden;
 }
 #root {
   width: 100% !important;
@@ -94,10 +102,143 @@ body {
   font-size: 12px;
   color: #fbbf24;
 }
+.pe-pagenav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
 
-/* ---------- vùng cuộn ---------- */
+/* ---------- thân: thanh trang + vùng xem ---------- */
+.pe-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* ---------- thanh trang bên trái ---------- */
+.pe-side {
+  width: 200px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+  border-right: 1px solid #334155;
+}
+.pe-side-head {
+  flex: none;
+  padding: 8px;
+  border-bottom: 1px solid #334155;
+}
+.pe-side-info {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+.pe-side-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.pe-side-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 0 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.pe-thumb {
+  position: relative;
+  flex: none;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: grab;
+  border: 2px solid transparent;
+  text-align: center;
+}
+.pe-thumb:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.pe-thumb.is-checked {
+  background: rgba(22, 119, 255, 0.18);
+}
+.pe-thumb.is-current {
+  border-color: #1677ff;
+}
+.pe-thumb-box {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+}
+.pe-thumb-box canvas {
+  display: block;
+}
+.pe-thumb-blank {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.pe-thumb-num {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.pe-thumb-check {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.pe-thumb:hover .pe-thumb-check,
+.pe-thumb.is-checked .pe-thumb-check {
+  opacity: 1;
+}
+.pe-thumb-tools {
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0;
+  padding: 1px 2px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid #334155;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.pe-thumb:hover .pe-thumb-tools {
+  opacity: 1;
+}
+.pe-drop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #1677ff;
+  border-radius: 2px;
+  z-index: 5;
+  box-shadow: 0 0 6px #1677ff;
+}
+.pe-drop-top {
+  top: -9px;
+}
+.pe-drop-bottom {
+  bottom: -9px;
+}
+
+/* ---------- vùng cuộn xem trang ---------- */
 .pe-main {
   flex: 1;
+  min-width: 0;
   min-height: 0;
   overflow: auto;
   background: #020617;
@@ -143,6 +284,7 @@ body {
   background: #fff;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  scroll-margin-top: 16px;
 }
 .pe-page.is-current {
   outline: 2px solid #1677ff;
@@ -315,4 +457,30 @@ body {
   height: 20px;
   border-radius: 50%;
   border: 1px solid #94a3b8;
+}
+
+/* ---------- vùng thả file ---------- */
+.pe-dropzone {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: rgba(2, 6, 23, 0.72);
+  border: 3px dashed #1677ff;
+  color: #e5e7eb;
+}
+.pe-dropzone .anticon {
+  font-size: 56px;
+  color: #1677ff;
+}
+.pe-dropzone h2 {
+  margin: 8px 0 4px;
+  color: #fff;
+}
+.pe-dropzone p {
+  margin: 0;
+  color: #94a3b8;
 }

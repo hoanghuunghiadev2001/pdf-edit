@@ -60,6 +60,7 @@ export default function PageView({
   newBold,
   newItalic,
   imageDraft,
+  ocrItems,
   onActivate,
   onSelect,
   onAdd,
@@ -153,18 +154,30 @@ export default function PageView({
     };
   }, [visible, page, entry.id, entry.blank]);
 
+  // Gộp chữ gốc của PDF với chữ nhận dạng bằng OCR (file scan)
+  const allItems = useMemo(
+    () =>
+      ocrItems?.length
+        ? [
+            ...items,
+            ...ocrItems.map((it) => ({ ...it, key: `${entry.id}:${it.key}` })),
+          ]
+        : items,
+    [items, ocrItems, entry.id],
+  );
+
   // Nhận diện đậm / nghiêng sau khi font đã nạp
   const styledItems = useMemo(
     () =>
       rendered && page
-        ? items.map((it) => ({ ...it, ...fontStyleOf(page, it) }))
-        : items.map((it) => ({
+        ? allItems.map((it) => ({ ...it, ...fontStyleOf(page, it) }))
+        : allItems.map((it) => ({
             ...it,
             bold: false,
             italic: false,
             family: "sans",
           })),
-    [items, rendered, page],
+    [allItems, rendered, page],
   );
 
   /* ---------- vẽ canvas ---------- */
@@ -579,7 +592,7 @@ export default function PageView({
           onPointerUp={layerUp}
           onPointerCancel={layerUp}
         >
-          {/* vùng chữ gốc bấm được */}
+          {/* vùng chữ gốc / chữ OCR bấm được */}
           {styledItems.map((it) => {
             const [px, py] = pos(it.x, it.y);
             return (
