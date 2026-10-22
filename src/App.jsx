@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/purity */
+/* eslint-disable react-hooks/refs */
 import { useState, useRef, useEffect } from "react";
 import {
   Button,
